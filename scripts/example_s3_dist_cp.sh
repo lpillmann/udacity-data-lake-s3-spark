@@ -1,0 +1,1 @@
+s3-dist-cp --src s3a://udacity-dend/song-data/ --dest hdfs:///song_data/
