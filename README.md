@@ -2,11 +2,11 @@
 
 ## Steps
 
-- copy files using s3-dist-cp to hdfs, then load to spark from there
-- prototype read and transform in jupyter
+- load from S3 using spark
+- transform using SQL API
 - write to hdfs, then use s3-dist-cp to copy to s3
 - create script to launch jobs from local onto the cluster
 
 Other todos:
 
-- Create bucket in us-west-2
+- Add partition by clauses to `write.parquet` commands, as requested in the instructions
