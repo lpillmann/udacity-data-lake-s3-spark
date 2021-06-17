@@ -14,7 +14,8 @@ What is in this repository:
     ├── add_emr_step.sh                  -> Add EMR step to execute ETL
     ├── copy_etl_script_to_s3.sh         -> Copy local etl.py to S3 to be used by EMR Step
     ├── copy_output_from_hdfs_to_s3.sh   -> Copy output parquet files from HDFS to S3
-    └── launch_cluster.sh                -> Launch EMR cluster
+    ├── launch_cluster.sh                -> Launch EMR cluster
+    └── ssh_to_cluster.sh                -> Open SSH session to cluster
 ```
 
 ## Implementation notes
