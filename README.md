@@ -56,6 +56,19 @@ Copy latest `etl.py` version to S3 bucket
 bash scripts/copy_etl_script_to_s3.sh
 ```
 
+Configure PySpark to use Python 3
+```bash
+bash scripts/ssh_to_cluster.sh
+```
+> wait until logged in...
+
+Then, add configuration line to `spark-env.sh`:
+```bash
+sudo sed -i -e '$a\export PYSPARK_PYTHON=/usr/bin/python3' /etc/spark/conf/spark-env.sh
+```
+
+(Note: tried running this command using `--command` option of `aws emr ssh` but had no success. That is why we need to run it manually)
+
 Add EMR step (new job to be executed)
 
 ```bash
