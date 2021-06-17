@@ -1,0 +1,1 @@
+aws s3 cp etl.py s3://udacity-data-lake-spark/scripts/ --profile udacity-emr
