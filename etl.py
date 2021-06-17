@@ -47,8 +47,8 @@ def process_song_data(spark, input_data, output_data):
     '''
     )
     artists.write \
-        .mode('overwrite') \
-        .parquet(f'{output_data}/artists')
+           .mode('overwrite') \
+           .parquet(f'{output_data}/artists')
 
 
 def process_log_data(spark, input_data, output_data):
@@ -125,8 +125,8 @@ def process_log_data(spark, input_data, output_data):
     '''
     )
     users.write \
-        .mode('overwrite') \
-        .parquet(f'{output_data}/users')
+         .mode('overwrite') \
+         .parquet(f'{output_data}/users')
     
     # Songplays table
     songplays = spark.sql(
@@ -193,9 +193,9 @@ def process_log_data(spark, input_data, output_data):
     # Register as temp view to be used by time table query
     songplays.createOrReplaceTempView("songplays")
     songplays.write \
-            .partitionBy('user_id') \
-            .mode('overwrite') \
-            .parquet(f'{output_data}/songplays')
+             .partitionBy('user_id') \
+             .mode('overwrite') \
+             .parquet(f'{output_data}/songplays')
 
     # Time table
     time = spark.sql(
