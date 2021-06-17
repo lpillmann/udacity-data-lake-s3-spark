@@ -11,7 +11,7 @@ def create_spark_session():
 
 def process_song_data(spark, input_data, output_data):
     """Process song data to create songs and artists tables"""
-    staging_songs = spark.read.json(f"{input_data}/song-data/A/A/*/*.json")  # TODO: change A/A to */*
+    staging_songs = spark.read.json(f"{input_data}/song-data/*/*/*/*.json")
     staging_songs.createOrReplaceTempView("staging_songs")
     
     # Songs table
@@ -133,7 +133,7 @@ def process_log_data(spark, input_data, output_data):
     '''
         with events as
         (
-        select * from staging_events
+            select * from staging_events
         ),
 
         songs as
