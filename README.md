@@ -9,8 +9,6 @@ What is in this repository:
 ```
 .
 ├── etl.py                               -> ETL main code (Spark job)
-├── notebooks
-│   └── sparkify.ipynb                   -> Notebook used during development
 ├── README.md                            -> Intro to project and how to use (this file) 
 └── scripts
     ├── add_emr_step.sh                  -> Add EMR step to execute ETL
