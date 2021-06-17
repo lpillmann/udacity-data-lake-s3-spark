@@ -68,12 +68,12 @@ bash scripts/add_emr_step.sh
 Copy output parquet files to S3
 
 ```bash
-ash scripts/copy_output_from_hdfs_to_s3.sh
+bash scripts/copy_output_from_hdfs_to_s3.sh
 ```
 
 ## Built With
 
-  - [AWS EMR](https://aws.amazon.com/emr/) - Used as Big Data cluster
+  - [AWS EMR](https://aws.amazon.com/emr/) - On-demand Hadoop cluster
   - [AWS S3](https://aws.amazon.com/s3/) - Storage of data sources
   - [Apache Spark](https://spark.apache.org/) - Data processing engine
   - [PySpark](https://spark.apache.org/docs/latest/api/python/) - Python module to interact with Spark
