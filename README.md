@@ -8,7 +8,7 @@ The project consists of loading data from S3, transforming with Spark into a sta
 What is in this repository:
 ```
 .
-├── etl.py                               -> ETL main code
+├── etl.py                               -> ETL main code (Spark job)
 ├── notebooks
 │   └── sparkify.ipynb                   -> Notebook used during development
 ├── README.md                            -> Intro to project and how to use (this file) 
