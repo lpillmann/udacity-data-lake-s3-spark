@@ -1,7 +1,16 @@
 from pyspark.sql import SparkSession
 
 
-def create_spark_session():
+def create_spark_session() -> SparkSession:
+    """Create Spark session.
+
+    Args:
+        (None)
+
+    Returns:
+        A Spark session object
+
+    """
     spark = SparkSession \
         .builder \
         .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:2.7.0") \
@@ -9,8 +18,18 @@ def create_spark_session():
     return spark
 
 
-def process_song_data(spark, input_data, output_data):
-    """Process song data to create songs and artists tables"""
+def process_song_data(spark: SparkSession, input_data: str, output_data: str) -> None:
+    """Process song data to create songs and artists tables.
+
+    Args:
+        spark: The Spark session to be used.
+        input_data: The location of input data (e.g S3 bucket URI).
+        output_data: The location of output data (e.g S3 bucket URI).
+
+    Returns:
+        (None)
+
+    """
     staging_songs = spark.read.json(f"{input_data}/song-data/*/*/*/*.json")
     staging_songs.createOrReplaceTempView("staging_songs")
     
@@ -51,8 +70,18 @@ def process_song_data(spark, input_data, output_data):
            .parquet(f'{output_data}/artists')
 
 
-def process_log_data(spark, input_data, output_data):
-    """Process events data from logs to create users, songplays and time tables"""
+def process_log_data(spark: SparkSession, input_data: str, output_data: str) -> None:
+    """Process events data from logs to create users, songplays and time tables.
+
+    Args:
+        spark: The Spark session to be used.
+        input_data: The location of input data (e.g S3 bucket URI).
+        output_data: The location of output data (e.g S3 bucket URI).
+
+    Returns:
+        (None)
+
+    """
     base_events = spark.read.json(f"{input_data}/log-data/*/*/*.json")
     base_events.createOrReplaceTempView("base_events")
 
@@ -143,7 +172,7 @@ def process_log_data(spark, input_data, output_data):
 
         only_next_song_events as
         (
-            select
+            select distinct
                 *
             from
                 events
@@ -176,6 +205,16 @@ def process_log_data(spark, input_data, output_data):
                 left outer join songs s on e.song = s.title
         ),
 
+        add_year_and_month_columns as
+        (
+            select
+                *,
+                extract(year from start_time) as year,
+                extract(month from start_time) as month
+            from
+                joined
+        ),
+
         final as (
             select
                 -- create songplay id based on other columns that form a unique combination
@@ -184,7 +223,7 @@ def process_log_data(spark, input_data, output_data):
                 ) as songplay_id,
                 *
             from
-                joined
+                add_year_and_month_columns
         )
 
         select * from final
@@ -193,7 +232,7 @@ def process_log_data(spark, input_data, output_data):
     # Register as temp view to be used by time table query
     songplays.createOrReplaceTempView("songplays")
     songplays.write \
-             .partitionBy('user_id') \
+             .partitionBy('year', 'month') \
              .mode('overwrite') \
              .parquet(f'{output_data}/songplays')
 
